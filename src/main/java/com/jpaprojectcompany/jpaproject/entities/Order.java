@@ -50,10 +50,10 @@ public class Order implements Serializable{
 	private User client;
 	
 	@OneToMany(mappedBy = "id.order")
-	private Set<OrderItem> orderItens = new HashSet<>();
+	private Set<OrderItem> orderItems = new HashSet<>();
 	
 	public Set<OrderItem> getItems(){
-		return orderItens;
+		return orderItems;
 	}
 	
 	public Order() {}
