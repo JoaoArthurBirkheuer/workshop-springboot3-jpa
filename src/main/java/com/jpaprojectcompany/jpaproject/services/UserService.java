@@ -35,4 +35,18 @@ public class UserService {
 	public void delete(Long id) {
 		ur.deleteById(id);
 	}
+	
+	public User update(Long id, User u) {
+		// PREPARA UM OBJETO MONITORADO PARA MANIPULAR
+		// E DEPOIS EXECUTAR OPERAÇÃO NO BANCO DE DADOS
+		User entity = ur.getReferenceById(id);
+		updateData(entity,u);
+		return ur.save(entity);
+	}
+	
+	private void updateData(User entity, User u) {
+		entity.setName(u.getName());
+		entity.setPhone(u.getPhone());
+		entity.setEmail(u.getEmail());
+	}
 }

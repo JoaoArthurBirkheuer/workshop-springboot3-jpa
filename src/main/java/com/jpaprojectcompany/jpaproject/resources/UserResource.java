@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +62,15 @@ public class UserResource {
 		us.delete(id);
 		return ResponseEntity.noContent().build();
 		// IF CLIENT HAS ORDERS, RETURNS 500 DUE TO VIOLATION OF INTEGRITY OF THE DATABASE
+		// POSTMAN IS NOT PROVIDING THE MESSAGE OF ERROR
+	}
+	
+	// UPDATE = PUT
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<User> update(@PathVariable Long id,
+			@RequestBody User obj){
+		obj = us.update(id, obj);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 }
