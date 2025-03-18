@@ -129,4 +129,7 @@ public class Order implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 	
+	public Double getTotal() {
+		return orderItems.stream().mapToDouble(item -> item.getQuantity() * item.getPrice()).sum();
+	}
 }
