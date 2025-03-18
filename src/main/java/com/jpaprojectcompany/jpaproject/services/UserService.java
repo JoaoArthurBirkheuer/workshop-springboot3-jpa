@@ -13,6 +13,8 @@ import com.jpaprojectcompany.jpaproject.repositories.UserRepository;
 import com.jpaprojectcompany.jpaproject.services.exceptions.DatabaseException;
 import com.jpaprojectcompany.jpaproject.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 // COMPONENT REGISTRATION
 // @Service, @Repository
 
@@ -51,11 +53,16 @@ public class UserService {
 	}
 	
 	public User update(Long id, User u) {
-		// PREPARA UM OBJETO MONITORADO PARA MANIPULAR
-		// E DEPOIS EXECUTAR OPERAÇÃO NO BANCO DE DADOS
-		User entity = ur.getReferenceById(id);
-		updateData(entity,u);
-		return ur.save(entity);
+		try {
+			// PREPARA UM OBJETO MONITORADO PARA MANIPULAR
+			// E DEPOIS EXECUTAR OPERAÇÃO NO BANCO DE DADOS
+			User entity = ur.getReferenceById(id);
+			updateData(entity,u);
+			return ur.save(entity);
+		}
+		catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(e.getMessage());
+		}
 	}
 	
 	private void updateData(User entity, User u) {
