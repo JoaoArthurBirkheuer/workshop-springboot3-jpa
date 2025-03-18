@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.jpaprojectcompany.jpaproject.entities.User;
 import com.jpaprojectcompany.jpaproject.repositories.UserRepository;
+import com.jpaprojectcompany.jpaproject.services.exceptions.DatabaseException;
 import com.jpaprojectcompany.jpaproject.services.exceptions.ResourceNotFoundException;
 
 // COMPONENT REGISTRATION
@@ -34,7 +37,17 @@ public class UserService {
 	}
 	
 	public void delete(Long id) {
+		try {
 		ur.deleteById(id);
+		}
+		// RETURNS NOT FOUND IF IT'S NOT ON THE DATABASE
+		catch(EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		// RETURNS IF IT VIOLATES THE INTEGRITY OF THE DATABASE
+		catch(DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public User update(Long id, User u) {
