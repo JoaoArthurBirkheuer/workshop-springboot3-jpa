@@ -8,6 +8,9 @@ public class JpaprojectApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaprojectApplication.class, args);
+		// HEROKU NÃO É MAIS GRATUITO
+		
+		
 	}
 
 }
