@@ -60,6 +60,16 @@ public class TestConfig implements CommandLineRunner {
 		
 		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 		
+		p1.getCategories().add(c2);
+		p2.getCategories().add(c3);
+		p2.getCategories().add(c1);
+		p3.getCategories().add(c3);
+		p4.getCategories().add(c3);
+		p5.getCategories().add(c2);
+		
+		// PARA ADICIONAR NOVA INFO, DEVE SALVAR
+		productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+		
 	}
 	
 }
